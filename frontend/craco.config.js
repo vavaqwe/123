@@ -87,6 +87,20 @@ webpackConfig.devServer = (devServerConfig) => {
   devServerConfig.host = '0.0.0.0';
   devServerConfig.port = 5000;
 
+  // Proxy API requests to backend
+  devServerConfig.proxy = {
+    '/api': {
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      secure: false,
+    },
+    '/ws': {
+      target: 'ws://localhost:8000',
+      ws: true,
+      changeOrigin: true,
+    },
+  };
+
   // Apply visual edits dev server setup if enabled
   if (config.enableVisualEdits && setupDevServer) {
     devServerConfig = setupDevServer(devServerConfig);
