@@ -48,13 +48,13 @@ class TradingBot:
         self.db = self.client[os.environ.get('DB_NAME', 'crypto_trading_bot')]
         
         # Initialize components
+        self.telegram = TelegramNotifier()
+        self.dex_client = DEXClient()
         self.blockchain_monitor = BlockchainMonitor(
             self.db,
             dex_client=self.dex_client,
             telegram=self.telegram
         )
-        self.telegram = TelegramNotifier()
-        self.dex_client = DEXClient()
         
         # Get bot configuration
         self.config = {
